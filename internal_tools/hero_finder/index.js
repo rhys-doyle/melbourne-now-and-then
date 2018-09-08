@@ -1,6 +1,8 @@
 const fetch = require("node-fetch");
 const prompt = require("prompt");
-const data = require("../history_image_grabber/points_with_coords.json");
+let data = require("../history_image_grabber/points_with_coords.json");
+
+data = data.reverse();
 
 const flickrKey = "87647f3d2d34efc07c027860cba76938";
 
@@ -16,9 +18,9 @@ const request = point =>
       `https://www.google.com.au/search?as_st=y&tbm=isch&hl=en&as_q=${encodeURIComponent(
         point.Title
       )}&as_epq=&as_oq=&as_eq=&cr=&as_sitesearch=&safe=images&tbs=sur:f
-
-
-
+      
+      
+      
       `
     );
 
