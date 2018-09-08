@@ -23,3 +23,27 @@ body,
   font-size: 12px;
   border-radius: 3px;
 }
+
+.legend-bar {
+  border-radius: 2px;
+  height: 5px;
+  width: 100%;
+  display: block;
+  background: linear-gradient(to right, #f7bb04 0%, #00d8b0 100%);
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.legend-bar::before {
+  content: "1863";
+  position: absolute;
+  left: 0;
+  top: 10px;
+}
+
+.legend-bar::after {
+  content: "1980";
+  position: absolute;
+  right: 0;
+  top: 10px;
+}

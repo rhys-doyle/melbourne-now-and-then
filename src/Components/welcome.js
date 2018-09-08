@@ -35,9 +35,17 @@ class Welcome extends Component {
               landmarks.
             </p>
             <div className="legend">
-              <div className="image">Landmark with Image</div>
-              <div className="streetview">Landmark with Streetview</div>
-              <div className="futureDev">Future Development</div>
+              <p>
+                <strong>KEY</strong>
+                <br />
+                <span style={{ display: "block", textAlign: "center" }}>
+                  Year original photo taken
+                </span>
+              </p>
+              <div className="legend-bar" />
+              <div className="futureDev" style={{ marginTop: 40 }}>
+                Future Development
+              </div>
             </div>
           </div>
           <div className="welcomeFooter">
