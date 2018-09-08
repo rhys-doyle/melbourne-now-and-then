@@ -1,7 +1,11 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import points from "../assets/data/points_with_coords.json";
+import _points from "../assets/data/points_with_coords.json";
+import references from "../assets/data/references.json";
 import "./map.css";
+
+const referencesPIDs = Object.keys(references);
+const points = _points.filter(point => referencesPIDs.includes(point.PID));
 
 const parseCoords = str => {
   const splitter = str.replace(/\s/g, "").split(",");
@@ -56,8 +60,8 @@ export default class Map extends React.Component {
         source: "pins",
         paint: {
           "circle-color": "#1dcead",
-          "circle-blur": 1,
-          "circle-radius": 3
+          "circle-blur": 0,
+          "circle-radius": 4
         }
       });
     });
@@ -78,7 +82,11 @@ export default class Map extends React.Component {
         .setHTML(
           `<span class='title'>${
             e.features[0].properties.title
-          }</span><div class='Container'><div class='imgBox'><img src='#' /></div><div class='imgBox'><img src='#' /></div></div>`
+          }</span><div class='Container'><div class='imgBox'><img src='${require(`../assets/historic_images/${
+            e.features[0].properties.ID
+          }.jpg`)}' /></div><div class='imgBox'><img src='${require(`../assets/modern_images/${
+            e.features[0].properties.ID
+          }.jpg`)}' /></div></div>`
         )
         .addTo(map);
 
