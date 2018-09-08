@@ -5,3 +5,8 @@ body,
   height: 100vh;
   font-family: "Titillium Web", sans-serif;
 }
+
+.gm-iv-address,
+.gmnoprint {
+  display: none !important;
+}

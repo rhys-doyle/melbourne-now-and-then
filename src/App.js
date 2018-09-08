@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Map from "./Components/map";
+import Welcome from "./Components/welcome";
 
 class App extends Component {
   render() {
@@ -10,6 +11,7 @@ class App extends Component {
           <h1 className="header">Melbourne: Now and Then</h1>
         </div>
         <Map />
+        <Welcome />
       </div>
     );
   }
