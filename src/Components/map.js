@@ -82,6 +82,20 @@ export default class Map extends React.Component {
     map: null
   };
 
+  patchCoords = (bounds, coordinates) => {
+    const { _ne, _sw } = bounds;
+
+    const maxLat = _sw.lat;
+    const minLat = _ne.lat;
+
+    const diff = (maxLat - minLat) * 0.25;
+
+    var patchedCoords = coordinates;
+    patchedCoords[1] = patchedCoords[1] - diff;
+
+    return patchedCoords;
+  };
+
   componentDidMount() {
     const map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -151,20 +165,8 @@ export default class Map extends React.Component {
         )
         .addTo(map);
 
-      const { _ne, _sw } = map.getBounds();
-
-      const maxLat = _sw.lat;
-      const minLat = _ne.lat;
-
-      const diff = (maxLat - minLat) * 0.25;
-
-      console.log(diff);
-
-      var patchedCoords = coordinates;
-      patchedCoords[1] = patchedCoords[1] - diff;
-
       map.easeTo({
-        center: patchedCoords,
+        center: this.patchCoords(map.getBounds(), coordinates),
         duration: 1600
       });
     });
@@ -194,8 +196,7 @@ export default class Map extends React.Component {
         .addTo(map);
 
       map.easeTo({
-        center: coordinates,
-        zoom: 13.3,
+        center: this.patchCoords(map.getBounds(), coordinates),
         duration: 1600
       });
     });
@@ -225,8 +226,7 @@ export default class Map extends React.Component {
         .addTo(map);
 
       map.easeTo({
-        center: coordinates,
-        zoom: 13.3,
+        center: this.patchCoords(map.getBounds(), coordinates),
         duration: 1600
       });
     });
