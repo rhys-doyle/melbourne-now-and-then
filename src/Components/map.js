@@ -141,19 +141,30 @@ export default class Map extends React.Component {
       })
         .setLngLat(coordinates)
         .setHTML(
-          `<span class='title'>${
+          `<div class='popup'><span class='title'>${
             e.features[0].properties.title
           }</span><div class='Container'><div class='imgBox'><img src='${require(`../assets/historic_images/${
             e.features[0].properties.ID
           }.jpg`)}' /></div><div class='imgBox'><img src='${require(`../assets/modern_images/${
             e.features[0].properties.ID
-          }.jpg`)}' /></div></div>`
+          }.jpg`)}' /></div></div><button class='more'>See More...</button></div>`
         )
         .addTo(map);
 
+      const { _ne, _sw } = map.getBounds();
+
+      const maxLat = _sw.lat;
+      const minLat = _ne.lat;
+
+      const diff = (maxLat - minLat) * 0.25;
+
+      console.log(diff);
+
+      var patchedCoords = coordinates;
+      patchedCoords[1] = patchedCoords[1] - diff;
+
       map.easeTo({
-        center: coordinates,
-        zoom: 13.3,
+        center: patchedCoords,
         duration: 1600
       });
     });
