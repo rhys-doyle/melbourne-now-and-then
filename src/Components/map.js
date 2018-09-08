@@ -11,16 +11,43 @@ let referencesPIDsMaps = [];
 window.globalDangerousThing = () => {};
 
 Object.keys(references).forEach(key => {
-  if (references[key] && references[key].includes("google")) {
-    referencesPIDsMaps.push(key);
-  } else {
-    referencesPIDsImages.push(key);
-  }
+  referencesPIDsImages.push(key);
+
+  // if (references[key] && references[key].includes("google")) {
+  //   referencesPIDsMaps.push(key);
+  // } else {
+  //   referencesPIDsImages.push(key);
+  // }
 });
 
 const points = _points.filter(point =>
   referencesPIDsImages.includes(point.PID)
 );
+
+const parseDate = date => {
+  if (date.includes("/")) {
+    return parseInt(date.split("/")[1]);
+  }
+
+  const jsDate = new Date(date);
+
+  return jsDate.getFullYear();
+};
+
+const pointsYears = points
+  .map(point => {
+    return parseDate(point.Date);
+  })
+  .sort((a, b) => a - b);
+
+const minYear = pointsYears[0];
+const maxYear = pointsYears[pointsYears.length - 1];
+
+console.log(minYear, maxYear);
+
+const differ = value => {
+  return Math.round(((parseDate(value) - minYear) / (maxYear - minYear)) * 100);
+};
 
 const mapPoints = _points.filter(point =>
   referencesPIDsMaps.includes(point.PID)
@@ -48,7 +75,9 @@ const data = {
       description: obj.Description,
       digital_uri: obj["Digital URI"],
       contributor: obj["Creator/Contributor"],
-      date: obj.Date
+      date: obj.Date,
+      diff: differ(obj.Date),
+      source: references[obj.PID]
     }
   }))
 };
@@ -135,20 +164,17 @@ export default class Map extends React.Component {
         type: "circle",
         source: "pins",
         paint: {
-          "circle-color": "#1dcead",
           "circle-blur": 0,
-          "circle-radius": 4
-        }
-      });
-
-      map.addLayer({
-        id: "mapPins",
-        type: "circle",
-        source: "mapPins",
-        paint: {
-          "circle-color": "#2196f3",
-          "circle-blur": 0,
-          "circle-radius": 4
+          "circle-radius": 5,
+          "circle-color": [
+            "interpolate",
+            ["linear"],
+            ["number", ["get", "diff"]],
+            0,
+            "#f7bb04",
+            100,
+            "#00d8b0"
+          ]
         }
       });
     });
@@ -160,40 +186,32 @@ export default class Map extends React.Component {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      const pop = new mapboxgl.Popup({
-        closeButton: false,
-        offset: 5,
-        anchor: "bottom"
-      })
-        .setLngLat(coordinates)
-        .setHTML(
-          `<div class='popup'><span class='title'>${
-            e.features[0].properties.title
-          }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
-            e.features[0].properties.date
-          }</span></span><img src='${require(`../assets/historic_images/${
-            e.features[0].properties.ID
-          }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><img src='${require(`../assets/modern_images/${
-            e.features[0].properties.ID
-          }.jpg`)}' /></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
-            e.features[0].properties
-          )})'>See More...</button></div>`
-        )
-        .addTo(map);
+      let html = "";
 
-      this.closeHandler(pop);
-
-      map.easeTo({
-        center: this.patchCoords(map.getBounds(), coordinates),
-        duration: 1600
-      });
-    });
-
-    map.on("click", "mapPins", e => {
-      var coordinates = e.features[0].geometry.coordinates.slice();
-
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      if (!e.features[0].properties.source.includes("google")) {
+        html = `<div class='popup'><span class='title'>${
+          e.features[0].properties.title
+        }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
+          e.features[0].properties.date
+        }</span></span><img src='${require(`../assets/historic_images/${
+          e.features[0].properties.ID
+        }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><img src='${require(`../assets/modern_images/${
+          e.features[0].properties.ID
+        }.jpg`)}' /></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
+          e.features[0].properties
+        )})'>See More...</button></div>`;
+      } else {
+        html = `<div class='popup'><span class='title'>${
+          e.features[0].properties.title
+        }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
+          e.features[0].properties.date
+        }</span></span><img src='${require(`../assets/historic_images/${
+          e.features[0].properties.ID
+        }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><iframe src='${
+          references[e.features[0].properties.ID]
+        }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
+          e.features[0].properties
+        )})'>See More...</button></div>`;
       }
 
       const pop = new mapboxgl.Popup({
@@ -202,19 +220,7 @@ export default class Map extends React.Component {
         anchor: "bottom"
       })
         .setLngLat(coordinates)
-        .setHTML(
-          `<div class='popup'><span class='title'>${
-            e.features[0].properties.title
-          }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
-            e.features[0].properties.date
-          }</span></span><img src='${require(`../assets/historic_images/${
-            e.features[0].properties.ID
-          }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><iframe src='${
-            references[e.features[0].properties.ID]
-          }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
-            e.features[0].properties
-          )})'>See More...</button></div>`
-        )
+        .setHTML(html)
         .addTo(map);
 
       this.closeHandler(pop);

@@ -33,8 +33,7 @@ class App extends Component {
           onCloseTray={() => this.setState({ showTray: false })}
         />
         <div className="perm-legend">
-          <div className="image">Landmark with Image</div>
-          <div className="streetview">Landmark with Streetview</div>
+          <div className="legend-bar" />
           <div className="futureDev">Future Development</div>
         </div>
         <Welcome />
