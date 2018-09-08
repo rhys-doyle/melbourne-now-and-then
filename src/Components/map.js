@@ -8,6 +8,8 @@ import "./map.css";
 let referencesPIDsImages = [];
 let referencesPIDsMaps = [];
 
+window.globalDangerousThing = () => {};
+
 Object.keys(references).forEach(key => {
   if (references[key] && references[key].includes("google")) {
     referencesPIDsMaps.push(key);
@@ -96,6 +98,16 @@ export default class Map extends React.Component {
     return patchedCoords;
   };
 
+  closeHandler = popup => {
+    popup.on("close", () => this.props.onToggleTray());
+  };
+
+  componentWillMount() {
+    window.globalDangerousThing = details => {
+      this.props.onToggleTray(details);
+    };
+  }
+
   componentDidMount() {
     const map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -148,7 +160,7 @@ export default class Map extends React.Component {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      new mapboxgl.Popup({
+      const pop = new mapboxgl.Popup({
         closeButton: false,
         offset: 5,
         anchor: "bottom"
@@ -161,9 +173,13 @@ export default class Map extends React.Component {
             e.features[0].properties.ID
           }.jpg`)}' /></div><div class='imgBox'><img src='${require(`../assets/modern_images/${
             e.features[0].properties.ID
-          }.jpg`)}' /></div></div><button class='more'>See More...</button></div>`
+          }.jpg`)}' /></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
+            e.features[0].properties
+          )})'>See More...</button></div>`
         )
         .addTo(map);
+
+      this.closeHandler(pop);
 
       map.easeTo({
         center: this.patchCoords(map.getBounds(), coordinates),
@@ -178,22 +194,26 @@ export default class Map extends React.Component {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
 
-      new mapboxgl.Popup({
+      const pop = new mapboxgl.Popup({
         closeButton: false,
         offset: 5,
         anchor: "bottom"
       })
         .setLngLat(coordinates)
         .setHTML(
-          `<span class='title'>${
+          `<div class='popup'><span class='title'>${
             e.features[0].properties.title
           }</span><div class='Container'><div class='imgBox'><img src='${require(`../assets/historic_images/${
             e.features[0].properties.ID
           }.jpg`)}' /></div><div class='imgBox'><iframe src='${
             references[e.features[0].properties.ID]
-          }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div>`
+          }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
+            e.features[0].properties
+          )})'>See More...</button></div>`
         )
         .addTo(map);
+
+      this.closeHandler(pop);
 
       map.easeTo({
         center: this.patchCoords(map.getBounds(), coordinates),
@@ -252,7 +272,6 @@ export default class Map extends React.Component {
     return (
       <div className="mapParent">
         <div className="mapContainer" ref={el => (this.mapContainer = el)} />
-        <div className="tray" />
       </div>
     );
   }

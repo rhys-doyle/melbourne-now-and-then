@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import "./tray.css";
 
 class Tray extends Component {
-  state = {
-    show: true
-  };
-
   render() {
-    return <div className="tray">tray</div>;
+    return (
+      <div className="tray">
+        <div>
+          {this.props.title} <p>{this.props.description}</p>
+        </div>
+      </div>
+    );
   }
 }
 

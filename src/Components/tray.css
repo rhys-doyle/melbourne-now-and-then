@@ -12,3 +12,7 @@
   padding: 1em;
   box-sizing: border-box;
 }
+
+.tray p {
+  font-size: 11px;
+}
