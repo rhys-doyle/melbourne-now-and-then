@@ -12,12 +12,12 @@ class App extends Component {
   toggleTray = details => {
     if (details) {
       this.setState({
-        showTray: !this.state.showTray,
+        showTray: true,
         activePoint: details
       });
     } else {
       this.setState({
-        showTray: !this.state.showTray
+        showTray: true
       });
     }
   };
@@ -28,7 +28,10 @@ class App extends Component {
         <div className="headerBox">
           <h1 className="header">Melbourne: Now and Then</h1>
         </div>
-        <Map onToggleTray={this.toggleTray} />
+        <Map
+          onToggleTray={this.toggleTray}
+          onCloseTray={() => this.setState({ showTray: false })}
+        />
         <div className="perm-legend">
           <div className="image">Landmark with Image</div>
           <div className="streetview">Landmark with Streetview</div>

@@ -99,7 +99,7 @@ export default class Map extends React.Component {
   };
 
   closeHandler = popup => {
-    popup.on("close", () => this.props.onToggleTray());
+    popup.on("close", () => this.props.onCloseTray());
   };
 
   componentWillMount() {
@@ -169,9 +169,11 @@ export default class Map extends React.Component {
         .setHTML(
           `<div class='popup'><span class='title'>${
             e.features[0].properties.title
-          }</span><div class='Container'><div class='imgBox'><img src='${require(`../assets/historic_images/${
+          }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
+            e.features[0].properties.date
+          }</span></span><img src='${require(`../assets/historic_images/${
             e.features[0].properties.ID
-          }.jpg`)}' /></div><div class='imgBox'><img src='${require(`../assets/modern_images/${
+          }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><img src='${require(`../assets/modern_images/${
             e.features[0].properties.ID
           }.jpg`)}' /></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
             e.features[0].properties
@@ -205,7 +207,9 @@ export default class Map extends React.Component {
             e.features[0].properties.title
           }</span><div class='Container'><div class='imgBox'><img src='${require(`../assets/historic_images/${
             e.features[0].properties.ID
-          }.jpg`)}' /></div><div class='imgBox'><iframe src='${
+          }.jpg`)}' />${
+            e.features[0].properties.date
+          }</div><div class='imgBox'><iframe src='${
             references[e.features[0].properties.ID]
           }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
             e.features[0].properties

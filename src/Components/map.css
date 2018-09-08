@@ -25,11 +25,12 @@
   border-radius: 15px;
   font-family: "Titillium Web", sans-serif;
   font-weight: 700;
-  max-width: 400px;
+  max-width: 800px;
+  width: 100%;
 }
 
 .Container {
-  padding: 10px 0 0 0;
+  padding: 15px 0;
   display: flex;
   justify-content: space-evenly;
 }
@@ -47,11 +48,31 @@
   display: flex;
   align-items: center;
   padding: 0 0 20px 0;
+  position: relative;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 14px;
 }
 
 .imgBox img {
   max-width: 100%;
   max-height: 20vw;
+}
+
+.date {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.date span {
+  display: inline-block;
+  border-radius: 1em;
+  border: 1px solid #1dcead;
+  padding: 1px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  font-weight: normal;
 }
 
 .header {
