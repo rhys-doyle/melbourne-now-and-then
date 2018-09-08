@@ -12,10 +12,12 @@
 
 .title {
   color: #1dcead;
+  font-size: 20px;
 }
 
 .devTitle {
   color: #a076a0;
+  font-size: 20px;
 }
 
 .mapboxgl-popup-content {
@@ -100,7 +102,7 @@
   font-weight: 700;
   display: inline-block;
   border: 0;
-  font-size: 15px;
+  font-size: 14px;
   min-width: 120px;
   text-align: center;
   cursor: pointer;
