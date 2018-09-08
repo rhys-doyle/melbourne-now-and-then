@@ -1,5 +1,5 @@
 .mapContainer {
-  height: 100vh;
+  height: 95vh;
   width: 100vw;
   position: absolute;
   top: 0;
@@ -43,4 +43,19 @@
 
 .imgBox img {
   max-width: 100%;
+}
+.headerBox {
+}
+.header {
+  color: #1dcead;
+  font-size: 25px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #22222295;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
 }
