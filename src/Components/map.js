@@ -43,7 +43,7 @@ const pointsYears = points
 const minYear = pointsYears[0];
 const maxYear = pointsYears[pointsYears.length - 1];
 
-console.log(minYear, maxYear);
+console.log(minYear, maxYear, pointsYears);
 
 const differ = value => {
   return Math.round(((parseDate(value) - minYear) / (maxYear - minYear)) * 100);
