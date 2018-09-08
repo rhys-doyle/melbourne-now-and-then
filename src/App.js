@@ -11,6 +11,11 @@ class App extends Component {
           <h1 className="header">Melbourne: Now and Then</h1>
         </div>
         <Map />
+        <div className="perm-legend">
+          <div className="image">Landmark with Image</div>
+          <div className="streetview">Landmark with Streetview</div>
+          <div className="futureDev">Future Development</div>
+        </div>
         <Welcome />
       </div>
     );
