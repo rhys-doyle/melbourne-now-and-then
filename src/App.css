@@ -14,8 +14,8 @@ body,
 
 .perm-legend {
   position: fixed;
-  bottom: 1em;
-  left: 1em;
+  bottom: 20px;
+  left: 20px;
   padding: 1em;
   background: black;
   z-index: 10;

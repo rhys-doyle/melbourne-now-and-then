@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Map from "./Components/map";
 import Welcome from "./Components/welcome";
+import Tray from "./Components/tray";
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <div className="futureDev">Future Development</div>
         </div>
         <Welcome />
+        <Tray />
       </div>
     );
   }

@@ -51,6 +51,7 @@
 
 .imgBox img {
   max-width: 100%;
+  max-height: 20vw;
 }
 
 .header {

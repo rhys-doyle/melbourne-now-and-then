@@ -1,0 +1,14 @@
+.tray {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: black;
+  border-radius: 3px;
+  z-index: 100000;
+  display: flex;
+  min-height: 80px;
+  color: #fff;
+  padding: 1em;
+  box-sizing: border-box;
+}
