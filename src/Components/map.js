@@ -2,10 +2,27 @@ import React from "react";
 import mapboxgl from "mapbox-gl";
 import _points from "../assets/data/points_with_coords.json";
 import references from "../assets/data/references.json";
+import development from "../assets/data/development.json";
 import "./map.css";
 
-const referencesPIDs = Object.keys(references);
-const points = _points.filter(point => referencesPIDs.includes(point.PID));
+let referencesPIDsImages = [];
+let referencesPIDsMaps = [];
+
+Object.keys(references).forEach(key => {
+  if (references[key] && references[key].includes("google")) {
+    referencesPIDsMaps.push(key);
+  } else {
+    referencesPIDsImages.push(key);
+  }
+});
+
+const points = _points.filter(point =>
+  referencesPIDsImages.includes(point.PID)
+);
+
+const mapPoints = _points.filter(point =>
+  referencesPIDsMaps.includes(point.PID)
+);
 
 const parseCoords = str => {
   const splitter = str.replace(/\s/g, "").split(",");
@@ -34,7 +51,28 @@ const data = {
   }))
 };
 
-console.log(data);
+const mapData = {
+  name: "State Library Victoria, Melbourne City Landmarks",
+  type: "FeatureCollection",
+
+  features: mapPoints.map(obj => ({
+    type: "Feature",
+    geometry: {
+      type: "Point",
+      coordinates: parseCoords(obj.Location)
+    },
+    properties: {
+      ID: obj.PID,
+      title: obj.Title,
+      description: obj.Description,
+      digital_uri: obj["Digital URI"],
+      contributor: obj["Creator/Contributor"],
+      date: obj.Date
+    }
+  }))
+};
+
+console.log(data, mapData);
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoicmh5cy0tIiwiYSI6ImNqbGJ2aDNzNDJya24zd3E4Yjg1dGswbHEifQ.OBOUcCT7jvj3dE8AifzbBw";
@@ -54,12 +92,35 @@ export default class Map extends React.Component {
 
     map.on("load", () => {
       map.addSource("pins", { type: "geojson", data: data });
+      map.addSource("mapPins", { type: "geojson", data: mapData });
+      map.addSource("development", { type: "geojson", data: development });
+      map.addLayer({
+        id: "development",
+        type: "fill",
+        source: "development",
+        paint: {
+          "fill-opacity": 0.1,
+          "fill-color": "#ec9eec"
+        }
+      });
+
       map.addLayer({
         id: "pins",
         type: "circle",
         source: "pins",
         paint: {
           "circle-color": "#1dcead",
+          "circle-blur": 0,
+          "circle-radius": 4
+        }
+      });
+
+      map.addLayer({
+        id: "mapPins",
+        type: "circle",
+        source: "mapPins",
+        paint: {
+          "circle-color": "#2196f3",
           "circle-blur": 0,
           "circle-radius": 4
         }
@@ -87,6 +148,37 @@ export default class Map extends React.Component {
           }.jpg`)}' /></div><div class='imgBox'><img src='${require(`../assets/modern_images/${
             e.features[0].properties.ID
           }.jpg`)}' /></div></div>`
+        )
+        .addTo(map);
+
+      map.easeTo({
+        center: coordinates,
+        zoom: 13.3,
+        duration: 1600
+      });
+    });
+
+    map.on("click", "mapPins", e => {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      new mapboxgl.Popup({
+        closeButton: false,
+        offset: 5,
+        anchor: "bottom"
+      })
+        .setLngLat(coordinates)
+        .setHTML(
+          `<span class='title'>${
+            e.features[0].properties.title
+          }</span><div class='Container'><div class='imgBox'><img src='${require(`../assets/historic_images/${
+            e.features[0].properties.ID
+          }.jpg`)}' /></div><div class='imgBox'><iframe src='${
+            references[e.features[0].properties.ID]
+          }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div>`
         )
         .addTo(map);
 

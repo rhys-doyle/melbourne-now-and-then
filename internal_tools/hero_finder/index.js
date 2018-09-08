@@ -1,8 +1,6 @@
 const fetch = require("node-fetch");
 const prompt = require("prompt");
 const data = require("../history_image_grabber/points_with_coords.json");
-const _references = require("./references.json");
-const references = _references.references;
 
 const flickrKey = "87647f3d2d34efc07c027860cba76938";
 
