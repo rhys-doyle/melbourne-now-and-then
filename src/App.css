@@ -10,3 +10,15 @@ body,
 .gmnoprint {
   display: none !important;
 }
+
+.perm-legend {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  padding: 1em;
+  background: black;
+  z-index: 10;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 3px;
+}
