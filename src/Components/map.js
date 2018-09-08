@@ -2,6 +2,7 @@ import React from "react";
 import mapboxgl from "mapbox-gl";
 import _points from "../assets/data/points_with_coords.json";
 import references from "../assets/data/references.json";
+import development from "../assets/data/development.json";
 import "./map.css";
 
 const referencesPIDs = Object.keys(references);
@@ -54,6 +55,17 @@ export default class Map extends React.Component {
 
     map.on("load", () => {
       map.addSource("pins", { type: "geojson", data: data });
+      map.addSource("development", { type: "geojson", data: development });
+      map.addLayer({
+        id: "development",
+        type: "fill",
+        source: "development",
+        paint: {
+          "fill-opacity": 0.1,
+          "fill-color": "#ec9eec"
+        }
+      });
+
       map.addLayer({
         id: "pins",
         type: "circle",
