@@ -189,6 +189,37 @@ export default class Map extends React.Component {
       });
     });
 
+    map.on("click", "development", e => {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+      coordinates = coordinates[0][0];
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      console.log(e.features[0]);
+
+      new mapboxgl.Popup({
+        closeButton: false,
+        offset: 5,
+        anchor: "top"
+      })
+        .setLngLat(coordinates)
+        .setHTML(
+          `<span class='devTitle'>${e.features[0].properties.shape_type.replace(
+            "_",
+            " "
+          )}: ${e.features[0].properties.status}</span>`
+        )
+        .addTo(map);
+
+      map.easeTo({
+        center: coordinates,
+        zoom: 13.3,
+        duration: 1600
+      });
+    });
+
     map.on("mouseenter", "pins", () => {
       map.getCanvas().style.cursor = "pointer";
     });

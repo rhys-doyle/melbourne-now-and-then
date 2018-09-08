@@ -14,6 +14,10 @@
   color: #1dcead;
 }
 
+.devTitle {
+  color: #a076a0;
+}
+
 .mapboxgl-popup-content {
   background-color: #22222295;
   color: #1dcead;
@@ -32,6 +36,10 @@
 
 .mapboxgl-popup-tip {
   border-top-color: #22222295 !important;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #22222295 !important;
 }
 
 .imgBox {
