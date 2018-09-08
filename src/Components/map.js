@@ -43,7 +43,7 @@ const pointsYears = points
 const minYear = pointsYears[0];
 const maxYear = pointsYears[pointsYears.length - 1];
 
-console.log(minYear, maxYear);
+console.log(minYear, maxYear, pointsYears);
 
 const differ = value => {
   return Math.round(((parseDate(value) - minYear) / (maxYear - minYear)) * 100);
@@ -193,11 +193,15 @@ export default class Map extends React.Component {
           e.features[0].properties.title
         }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
           e.features[0].properties.date
-        }</span></span><img src='${require(`../assets/historic_images/${
+        }</span></span><a href="${
+          e.features[0].properties.digital_uri
+        }" target="_blank"><img src='${require(`../assets/historic_images/${
           e.features[0].properties.ID
-        }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><img src='${require(`../assets/modern_images/${
+        }.jpg`)}' /></a></div><div class='imgBox'><span class="date"><span>now</span></span><a href="${
+          references[e.features[0].properties.ID]
+        }" target="_blank"><img src='${require(`../assets/modern_images/${
           e.features[0].properties.ID
-        }.jpg`)}' /></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
+        }.jpg`)}' /></a></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
           e.features[0].properties
         )})'>See More...</button></div>`;
       } else {
@@ -205,9 +209,11 @@ export default class Map extends React.Component {
           e.features[0].properties.title
         }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
           e.features[0].properties.date
-        }</span></span><img src='${require(`../assets/historic_images/${
+        }</span></span><a href="${
+          e.features[0].properties.digital_uri
+        }" target="_blank"><img src='${require(`../assets/historic_images/${
           e.features[0].properties.ID
-        }.jpg`)}' /></div><div class='imgBox'><span class="date"><span>now</span></span><iframe src='${
+        }.jpg`)}' /></a></div><div class='imgBox'><span class="date"><span>now</span></span><iframe src='${
           references[e.features[0].properties.ID]
         }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
           e.features[0].properties

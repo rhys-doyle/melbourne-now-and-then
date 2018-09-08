@@ -61,6 +61,11 @@
 .imgBox img {
   max-width: 100%;
   max-height: 20vw;
+  transition: all 0.4s ease;
+}
+
+.imgBox img:hover {
+  transform: scale(1.05);
 }
 
 .date {
