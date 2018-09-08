@@ -7,7 +7,8 @@ body,
 }
 
 .gm-iv-address,
-.gmnoprint {
+.gmnoprint,
+.mapboxgl-ctrl-top-left {
   display: none !important;
 }
 
