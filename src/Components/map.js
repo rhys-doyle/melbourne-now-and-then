@@ -194,6 +194,20 @@ export default class Map extends React.Component {
       });
 
       map.addLayer({
+        id: "lakeslabels",
+        type: "symbol",
+        source: "lakes",
+        layout: {
+          "symbol-placement": "point",
+          "text-field": "{type}",
+          "text-size": 12
+        },
+        paint: {
+          "text-color": "#59dcee"
+        }
+      });
+
+      map.addLayer({
         id: "creeks",
         type: "line",
         source: "creeks",
@@ -260,6 +274,14 @@ export default class Map extends React.Component {
         duration: 1600
       });
     });
+
+    // map.on("click", "lakes", e => {
+    //   new mapboxgl.Popup({
+    //     closeButton: false,
+    //     offset: 2,
+    //     anchor: "bottom"
+    //   }).setLngLat(e.features[0].geometry.coordinates);
+    // });
 
     map.on("click", "development", e => {
       var coordinates = e.features[0].geometry.coordinates.slice();
