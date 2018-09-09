@@ -47,3 +47,12 @@ body,
   right: 0;
   top: 10px;
 }
+
+.formerWater:before {
+  content: "";
+  display: inline-block;
+  margin-right: 1em;
+  width: 10px;
+  height: 10px;
+  background-color: #59dcee50;
+}

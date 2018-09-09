@@ -4,6 +4,8 @@ import _points from "../assets/data/points_with_coords.json";
 import references from "../assets/data/references.json";
 import development from "../assets/data/development.json";
 import "./map.css";
+import creeks from "../assets/data/creeks.json";
+import lakes_wetlands from "../assets/data/lakes_wetlands.json";
 
 let referencesPIDsImages = [];
 let referencesPIDsMaps = [];
@@ -149,6 +151,8 @@ export default class Map extends React.Component {
       map.addSource("pins", { type: "geojson", data: data });
       map.addSource("mapPins", { type: "geojson", data: mapData });
       map.addSource("development", { type: "geojson", data: development });
+      map.addSource("lakes", { type: "geojson", data: lakes_wetlands });
+      map.addSource("creeks", { type: "geojson", data: creeks });
       map.addLayer({
         id: "development",
         type: "fill",
@@ -175,6 +179,26 @@ export default class Map extends React.Component {
             100,
             "#00d8b0"
           ]
+        }
+      });
+
+      map.addLayer({
+        id: "lakes",
+        type: "fill",
+        source: "lakes",
+        paint: {
+          "fill-outline-color": "#5d9cee",
+          "fill-color": "#5d9cee",
+          "fill-opacity": 0.1
+        }
+      });
+
+      map.addLayer({
+        id: "creeks",
+        type: "line",
+        source: "creeks",
+        paint: {
+          "line-color": "#5d9cee"
         }
       });
     });

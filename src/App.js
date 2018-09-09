@@ -34,6 +34,7 @@ class App extends Component {
         />
         <div className="perm-legend">
           <div className="legend-bar" />
+          <div className="formerWater">Former Creeks/Wetlands</div>
           <div className="futureDev">Future Development</div>
         </div>
         <Welcome />
