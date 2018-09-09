@@ -240,7 +240,10 @@ export default class Map extends React.Component {
         }" target="_blank"><img src='${require(`../assets/modern_images/${
           e.features[0].properties.ID
         }.jpg`)}' /></a></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
-          e.features[0].properties
+          {
+            title: e.features[0].properties.title,
+            description: e.features[0].properties.description
+          }
         )})'>Read More...</button></div>`;
       } else {
         html = `<div class='popup'><span class='title'>${
@@ -254,7 +257,10 @@ export default class Map extends React.Component {
         }.jpg`)}' /></a></div><div class='imgBox'><span class="date"><span>now</span></span><iframe src='${
           references[e.features[0].properties.ID]
         }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
-          e.features[0].properties
+          {
+            title: e.features[0].properties.title,
+            description: e.features[0].properties.description
+          }
         )})'>Read More...</button></div>`;
       }
 
