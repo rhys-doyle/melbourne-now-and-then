@@ -43,6 +43,7 @@ class Welcome extends Component {
                 </span>
               </p>
               <div className="legend-bar" />
+              <div className="formerWater">Former Creeks/Wetlands</div>
               <div className="futureDev" style={{ marginTop: 40 }}>
                 Future Development
               </div>
