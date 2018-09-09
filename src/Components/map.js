@@ -215,9 +215,9 @@ export default class Map extends React.Component {
       if (!e.features[0].properties.source.includes("google")) {
         html = `<div class='popup'><span class='title'>${
           e.features[0].properties.title
-        }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
+        }</span><div class='Container'><div class='imgBox'><span class="date"><span>${parseDate(
           e.features[0].properties.date
-        }</span></span><a href="${
+        )}</span></span><a href="${
           e.features[0].properties.digital_uri
         }" target="_blank"><img src='${require(`../assets/historic_images/${
           e.features[0].properties.ID
@@ -231,9 +231,9 @@ export default class Map extends React.Component {
       } else {
         html = `<div class='popup'><span class='title'>${
           e.features[0].properties.title
-        }</span><div class='Container'><div class='imgBox'><span class="date"><span>${
+        }</span><div class='Container'><div class='imgBox'><span class="date"><span>${parseDate(
           e.features[0].properties.date
-        }</span></span><a href="${
+        )}</span></span><a href="${
           e.features[0].properties.digital_uri
         }" target="_blank"><img src='${require(`../assets/historic_images/${
           e.features[0].properties.ID
