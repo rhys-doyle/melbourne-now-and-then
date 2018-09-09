@@ -241,7 +241,7 @@ export default class Map extends React.Component {
           e.features[0].properties.ID
         }.jpg`)}' /></a></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
           e.features[0].properties
-        )})'>See More...</button></div>`;
+        )})'>Read More...</button></div>`;
       } else {
         html = `<div class='popup'><span class='title'>${
           e.features[0].properties.title
@@ -255,7 +255,7 @@ export default class Map extends React.Component {
           references[e.features[0].properties.ID]
         }' width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe></div></div><button class='more' onclick='globalDangerousThing(${JSON.stringify(
           e.features[0].properties
-        )})'>See More...</button></div>`;
+        )})'>Read More...</button></div>`;
       }
 
       const pop = new mapboxgl.Popup({
