@@ -29,7 +29,7 @@ class Welcome extends Component {
               <span className="present">present</span> images.
             </p>
             <p>
-              You can also see buildings that are upcomming and currently under
+              You can also see buildings that are upcoming and currently under
               construction, allowing you to see the{" "}
               <span className="future">future</span> surrounding these
               landmarks.
